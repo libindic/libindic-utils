@@ -1,8 +1,8 @@
 from setuptools import setup, find_packages
 
-name='common'
+name = 'common'
 
-setup (
+setup(
     name=name,
     version="0.1",
     url="",
@@ -12,9 +12,9 @@ setup (
     author_email="santhosh.thottingal@gmail.com",
     long_description="""This library helps other modules in
 their functioning.""",
-    include_package_data=True,    
+    include_package_data=True,
     packages=find_packages(exclude='tests'),
     setup_requires=['setuptools-git'],
     install_requires=['setuptools'],
     zip_safe=False,
-    )
+)
