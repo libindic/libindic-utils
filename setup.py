@@ -13,7 +13,6 @@ setup(
     long_description="""This library helps other modules in
 their functioning.""",
     include_package_data=True,
-    packages=find_packages(exclude='tests'),
     setup_requires=['setuptools-git'],
     install_requires=['setuptools'],
     zip_safe=False,
