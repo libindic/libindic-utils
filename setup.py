@@ -1,6 +1,6 @@
 from setuptools import setup
 
-name = 'common'
+name = 'silpa-common'
 
 setup(
     name=name,
@@ -10,8 +10,7 @@ setup(
     description="Common Library for SILPA modules",
     author='Santhosh Thottingal',
     author_email="santhosh.thottingal@gmail.com",
-    long_description="""This library helps other modules in
-their functioning.""",
+    long_description="""This module is bundle of common functions used by modules developed for Project SILPA""",
     include_package_data=True,
     setup_requires=['setuptools-git'],
     install_requires=['setuptools'],
