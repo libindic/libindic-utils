@@ -1,6 +1,6 @@
 from setuptools import setup
 
-name = 'silpa-common'
+name = 'silpa_common'
 
 setup(
     name=name,
