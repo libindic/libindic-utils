@@ -21,7 +21,7 @@
 import string
 
 
-def _detect_lang(text):
+def detect_lang(text):
     """
     Detect the language of the given text using the unicode range.
     This function can take a chunk of text and return a dictionary
