@@ -20,7 +20,8 @@
 
 import string
 
-def check(old_lang_code,new_lang_code):
+
+def check(old_lang_code, new_lang_code):
     """
     this function helps to make sure that every letter
     of a word have same language.
@@ -35,6 +36,12 @@ def check(old_lang_code,new_lang_code):
             return False
         else:
             return True
+
+"""
+error when word contains letters from
+more then one languages
+"""
+mix_error_line = "mixing of more then one language found"
 
 
 def detect_lang(text):
@@ -72,103 +79,103 @@ def detect_lang(text):
                     continue
 
                 if ((ord(letter) >= 0x0D00) & (ord(letter) <= 0x0D7F)):
-                    if(check(lang_code,"ml_IN")):
+                    if(check(lang_code, "ml_IN")):
                         result_dict[orig_word] = "ml_IN"
                         lang_code = "ml_IN"
                         index = index + 1
                         continue
                     else:
-                        result_dict[orig_word] = "mixing of more then one language found"
+                        result_dict[orig_word] = mix_error_line
                         break
 
                 if ((ord(letter) >= 0x0980) & (ord(letter) <= 0x09FF)):
-                    if(check(lang_code,"bn_IN")):
+                    if(check(lang_code, "bn_IN")):
                         result_dict[orig_word] = "bn_IN"
                         lang_code = "bn_IN"
                         index = index + 1
                         continue
                     else:
-                        result_dict[orig_word] = "mixing of more then one language found"
+                        result_dict[orig_word] = mix_error_line
                         break
 
                 if ((ord(letter) >= 0x0900) & (ord(letter) <= 0x097F)):
-                    if(check(lang_code,"hi_IN")):
+                    if(check(lang_code, "hi_IN")):
                         result_dict[orig_word] = "hi_IN"
                         lang_code = "hi_IN"
                         index = index + 1
                         continue
                     else:
-                        result_dict[orig_word] = "mixing of more then one language found"
+                        result_dict[orig_word] = mix_error_line
                         break
 
                 if ((ord(letter) >= 0x0A80) & (ord(letter) <= 0x0AFF)):
-                    if(check(lang_code,"gu_IN")):
+                    if(check(lang_code, "gu_IN")):
                         result_dict[orig_word] = "gu_IN"
                         lang_code = "gu_IN"
                         index = index + 1
                         continue
                     else:
-                        result_dict[orig_word] = "mixing of more then one language found"
+                        result_dict[orig_word] = mix_error_line
                         break
 
                 if ((ord(letter) >= 0x0A00) & (ord(letter) <= 0x0A7F)):
-                    if(check(lang_code,"pa_IN")):
+                    if(check(lang_code, "pa_IN")):
                         result_dict[orig_word] = "pa_IN"
                         lang_code = "pa_IN"
                         index = index + 1
                         continue
                     else:
-                        result_dict[orig_word] = "mixing of more then one language found"
+                        result_dict[orig_word] = mix_error_line
                         break
 
                 if ((ord(letter) >= 0x0C80) & (ord(letter) <= 0x0CFF)):
-                    if(check(lang_code,"kn_IN")):
+                    if(check(lang_code, "kn_IN")):
                         result_dict[orig_word] = "kn_IN"
                         lang_code = "kn_IN"
                         index = index + 1
                         continue
                     else:
-                        result_dict[orig_word] = "mixing of more then one language found"
+                        result_dict[orig_word] = mix_error_line
                         break
 
                 if ((ord(letter) >= 0x0B00) & (ord(letter) <= 0x0B7F)):
-                    if(check(lang_code,"or_IN")):
+                    if(check(lang_code, "or_IN")):
                         result_dict[orig_word] = "or_IN"
                         lang_code = "or_IN"
                         index = index + 1
                         continue
                     else:
-                        result_dict[orig_word] = "mixing of more then one language found"
+                        result_dict[orig_word] = mix_error_line
                         break
 
                 if ((ord(letter) >= 0x0B80) & (ord(letter) <= 0x0BFF)):
-                    if(check(lang_code,"ta_IN")):
+                    if(check(lang_code, "ta_IN")):
                         result_dict[orig_word] = "ta_IN"
                         lang_code = "ta_IN"
                         index = index + 1
                         continue
                     else:
-                        result_dict[orig_word] = "mixing of more then one language found"
+                        result_dict[orig_word] = mix_error_line
                         break
 
                 if ((ord(letter) >= 0x0C00) & (ord(letter) <= 0x0C7F)):
-                    if(check(lang_code,"te_IN")):
+                    if(check(lang_code, "te_IN")):
                         result_dict[orig_word] = "te_IN"
                         lang_code = "te_IN"
                         index = index + 1
                         continue
                     else:
-                        result_dict[orig_word] = "mixing of more then one language found"
+                        result_dict[orig_word] = mix_error_line
                         break
 
                 if ((letter <= u'z')):  # this is fallback case.
-                    if(check(lang_code,"en_US")):
+                    if(check(lang_code, "en_US")):
                         result_dict[orig_word] = "en_US"
                         lang_code = "en_US"
                         index = index + 1
                         continue
                     else:
-                        result_dict[orig_word] = "mixing of more then one language found"
+                        result_dict[orig_word] = mix_error_line
                         break
 
                 index = index + 1
