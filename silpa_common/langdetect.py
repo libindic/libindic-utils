@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
-#Language Detection based on unicode range
+# Language Detection based on unicode range
 # Copyright 2008 Santhosh Thottingal <santhosh.thottingal@gmail.com>
 # http://www.smc.org.in
 #
@@ -36,7 +36,7 @@ def detect_lang(text):
         word = words[word_iter]
         if(word):
             orig_word = word
-            #remove the punctuations
+            # remove the punctuations
             for punct in string.punctuation:
                 word = word.replace(punct, " ")
             length = len(word)

@@ -1,4 +1,6 @@
-#-*- coding: utf-8 -*-
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 
 from silpa_common.langdetect import detect_lang
 from silpa_common import servicemethod
