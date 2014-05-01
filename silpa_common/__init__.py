@@ -1,3 +1,8 @@
 # -*- coding: utf-8 -*-
-from silpa_common.charmap import charmap
-from silpa_common.langdetect import detect_lang
+
+__all__ = ['servicemethod']
+
+
+def servicemethod(fn):
+    fn.service_method = True
+    return fn
