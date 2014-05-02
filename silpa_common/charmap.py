@@ -243,9 +243,12 @@ def get_language(char):
        :return: string representing language or None if char not found
            in our mapping.
     '''
-    tempchar = char.decode('utf-8') if type(char).__name__ == 'str' else char
+    if sys.version_info.major == 2:
+        tmpchr = char.decode('utf-8') if type(char).__name__ == 'str' else char
+    else:
+        tmpchr = char
     for lang in charmap:
-        if tempchar in charmap[lang]:
+        if tmpchr in charmap[lang]:
                 return lang
 
     # Reached here means no language is found check in ISO and IPA set
