@@ -22,6 +22,14 @@
 # email: santhosh.thottingal@gmail.com
 # URL: http://www.smc.org.in
 
+import sys
+
+if sys.version_info.major == 3:
+    from functools import lru_cache
+else:
+    from repoze.lru import lru_cache
+
+
 charmap = {
     "hi_IN": [u"ँ", u"ं", u"ः", u"ऄ", u"अ", u"आ", u"इ", u"ई", u"उ", u"ऊ", u"ऋ",
               u"ऌ", u"ऍ", u"ऎ", u"ए", u"ऐ", u"ऑ", u"ऒ", u"ओ", u"औ", u"क", u"ख",
@@ -148,6 +156,9 @@ charmap = {
                 'Q', 'Q', 'Q', '0', '0', '0', '1', '2', '3', '4', '5', '6',
                 '7', '8', '9', '0', '0', '0', '0', '0', '0', '0', '0', '0',
                 '0', 'J', 'J', 'Q', 'P', 'P', 'F'],
+}
+
+charmap_transphon = {
     "ISO15919": ["m̐", "ṁ", "ḥ", "", "a", "ā", "i", "ī", "u", "ū", "ṛ", "ḷ",
                  "ê", "e", "ē", "ai", "ô", "o", "ō", "au", "ka", "kha", "ga",
                  "gha", "ṅa", "ca", "cha", "ja", "jha", "ña", "ṭa", "ṭha",
@@ -172,3 +183,75 @@ charmap = {
             "9", "൰", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
             ""]
 }
+
+
+@lru_cache(maxsize=1024)
+def char_compare(char1, char2):
+    ''' Check if 2 characters are similar
+
+        This function checks if given 2 characters are similar but are
+        from 2 different languages.
+
+        :param char1: First character for comparison
+        :param char2: Second character for comparison
+
+        :return: 0 if both characters are same, 1 if both characters
+                 are similar but from different language and -1 if any
+                 one or both characters are not found
+    '''
+    if char1 == char2:
+        return 0
+
+    char1_index = -1
+    char2_index = -1
+
+    char1_lang = get_language(char1)
+    char2_lang = get_language(char2)
+
+    if char1_lang is not None and char2_lang is not None:
+        # Is this IPA or ISO15919 char?
+        if char1_lang in ["ISO15919", "IPA"]:
+            char1_index = charmap_transphon[char1_lang].index(char1)
+
+        if char2_lang in ["ISO15919", "IPA"]:
+            char2_index = charmap_transphon[char2_lang].index(char2)
+
+        # Still index not found?
+        if char1_index == -1:
+            char1_index = charmap[char1_lang].index(char1)
+
+        if char2_index == -1:
+            char2_index = charmap[char2_lang].index(char2)
+
+        # is char index similar?
+        if char1_index == char2_index:
+            return 1
+
+    # char's are not similar
+    return -1
+
+
+@lru_cache(maxsize=1024)
+def get_language(char):
+    ''' Get the language of given `char'
+
+       Return the language of given character, if character language
+       is not found `None' is returned.
+
+       :param char:
+           The char whose language is to be detected
+       :return: string representing language or None if char not found
+           in our mapping.
+    '''
+    tempchar = char.decode('utf-8') if type(char).__name__ == 'str' else char
+    for lang in charmap:
+        if tempchar in charmap[lang]:
+                return lang
+
+    # Reached here means no language is found check in ISO and IPA set
+    for lang in charmap_transphon:
+        if char in charmap_transphon[lang]:
+            return lang
+
+    # Nothing found!
+    return None
