@@ -4,6 +4,8 @@ python:
   - "pypy"
   - "3.3"
 install:
+  - if [[ $TRAVIS_PYTHON_VERSION == '2.7' ]]; then pip install -r requirements-py2.txt; fi
+  - if [[ $TRAVIS_PYTHON_VERSION == 'pypy' ]]; then pip install -r requirements-py2.txt; fi
   - pip install flake8
   - pip install coveralls
 script: make travis
