@@ -22,6 +22,9 @@
 # email: santhosh.thottingal@gmail.com
 # URL: http://www.smc.org.in
 
+
+__all__ = ['charmap', 'get_language', 'char_compare']
+
 import sys
 
 if sys.version_info.major == 3:
