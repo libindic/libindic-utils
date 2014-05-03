@@ -237,12 +237,18 @@ def get_language(char):
     else:
         tmpchr = char
     for lang in charmap:
-        if tmpchr in charmap[lang]:
+        if tmpchr.lower() in charmap[lang]:
                 return lang
+
+    if sys.version_info.major == 2:
+        tmpchr = char.encode('utf-8') if type(char).__name__ == 'unicode'\
+            else char
+    else:
+        tmpchr = char
 
     # Reached here means no language is found check in ISO and IPA set
     for lang in charmap_transphon:
-        if char in charmap_transphon[lang]:
+        if tmpchr in charmap_transphon[lang]:
             return lang
 
     # Nothing found!
