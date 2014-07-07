@@ -21,12 +21,36 @@
 import string
 
 
+def check(old_lang_code, new_lang_code):
+    """
+    this function helps to make sure that every letter
+    of a word have same language.
+    if language codes for every letter are same
+    then it returns True.
+    """
+
+    if(old_lang_code == ''):
+        return True
+    else:
+        if(old_lang_code != new_lang_code):
+            return False
+        else:
+            return True
+
+"""
+error when word contains letters from
+more then one languages
+"""
+mix_error_line = "mixing of more then one language found"
+
+
 def detect_lang(text):
     """
     Detect the language of the given text using the unicode range.
     This function can take a chunk of text and return a dictionary
     containing word-language key-value pairs.
     """
+
     words = text.split(" ")
     word_count = len(words)
     word_iter = 0
@@ -41,6 +65,11 @@ def detect_lang(text):
                 word = word.replace(punct, " ")
             length = len(word)
             index = 0
+
+            # detected language code, initially blank
+            # one argument for `function : check()`
+            lang_code = ''
+
             # scan left to write, skip any punctuations,
             # the detection stops in the first match itself.
             while index < length:
@@ -48,36 +77,107 @@ def detect_lang(text):
                 if not letter.isalpha():
                     index = index + 1
                     continue
+
                 if ((ord(letter) >= 0x0D00) & (ord(letter) <= 0x0D7F)):
-                    result_dict[orig_word] = "ml_IN"
-                    break
+                    if(check(lang_code, "ml_IN")):
+                        result_dict[orig_word] = "ml_IN"
+                        lang_code = "ml_IN"
+                        index = index + 1
+                        continue
+                    else:
+                        result_dict[orig_word] = mix_error_line
+                        break
+
                 if ((ord(letter) >= 0x0980) & (ord(letter) <= 0x09FF)):
-                    result_dict[orig_word] = "bn_IN"
-                    break
+                    if(check(lang_code, "bn_IN")):
+                        result_dict[orig_word] = "bn_IN"
+                        lang_code = "bn_IN"
+                        index = index + 1
+                        continue
+                    else:
+                        result_dict[orig_word] = mix_error_line
+                        break
+
                 if ((ord(letter) >= 0x0900) & (ord(letter) <= 0x097F)):
-                    result_dict[orig_word] = "hi_IN"
-                    break
+                    if(check(lang_code, "hi_IN")):
+                        result_dict[orig_word] = "hi_IN"
+                        lang_code = "hi_IN"
+                        index = index + 1
+                        continue
+                    else:
+                        result_dict[orig_word] = mix_error_line
+                        break
+
                 if ((ord(letter) >= 0x0A80) & (ord(letter) <= 0x0AFF)):
-                    result_dict[orig_word] = "gu_IN"
-                    break
+                    if(check(lang_code, "gu_IN")):
+                        result_dict[orig_word] = "gu_IN"
+                        lang_code = "gu_IN"
+                        index = index + 1
+                        continue
+                    else:
+                        result_dict[orig_word] = mix_error_line
+                        break
+
                 if ((ord(letter) >= 0x0A00) & (ord(letter) <= 0x0A7F)):
-                    result_dict[orig_word] = "pa_IN"
-                    break
+                    if(check(lang_code, "pa_IN")):
+                        result_dict[orig_word] = "pa_IN"
+                        lang_code = "pa_IN"
+                        index = index + 1
+                        continue
+                    else:
+                        result_dict[orig_word] = mix_error_line
+                        break
+
                 if ((ord(letter) >= 0x0C80) & (ord(letter) <= 0x0CFF)):
-                    result_dict[orig_word] = "kn_IN"
-                    break
+                    if(check(lang_code, "kn_IN")):
+                        result_dict[orig_word] = "kn_IN"
+                        lang_code = "kn_IN"
+                        index = index + 1
+                        continue
+                    else:
+                        result_dict[orig_word] = mix_error_line
+                        break
+
                 if ((ord(letter) >= 0x0B00) & (ord(letter) <= 0x0B7F)):
-                    result_dict[orig_word] = "or_IN"
-                    break
+                    if(check(lang_code, "or_IN")):
+                        result_dict[orig_word] = "or_IN"
+                        lang_code = "or_IN"
+                        index = index + 1
+                        continue
+                    else:
+                        result_dict[orig_word] = mix_error_line
+                        break
+
                 if ((ord(letter) >= 0x0B80) & (ord(letter) <= 0x0BFF)):
-                    result_dict[orig_word] = "ta_IN"
-                    break
+                    if(check(lang_code, "ta_IN")):
+                        result_dict[orig_word] = "ta_IN"
+                        lang_code = "ta_IN"
+                        index = index + 1
+                        continue
+                    else:
+                        result_dict[orig_word] = mix_error_line
+                        break
+
                 if ((ord(letter) >= 0x0C00) & (ord(letter) <= 0x0C7F)):
-                    result_dict[orig_word] = "te_IN"
-                    break
+                    if(check(lang_code, "te_IN")):
+                        result_dict[orig_word] = "te_IN"
+                        lang_code = "te_IN"
+                        index = index + 1
+                        continue
+                    else:
+                        result_dict[orig_word] = mix_error_line
+                        break
+
                 if ((letter <= u'z')):  # this is fallback case.
-                    result_dict[orig_word] = "en_US"
-                    break
+                    if(check(lang_code, "en_US")):
+                        result_dict[orig_word] = "en_US"
+                        lang_code = "en_US"
+                        index = index + 1
+                        continue
+                    else:
+                        result_dict[orig_word] = mix_error_line
+                        break
+
                 index = index + 1
         word_iter = word_iter + 1
     return result_dict
